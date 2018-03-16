@@ -12,30 +12,30 @@ fscanf(STDIN, "%d",
 $lines = array();
 for ($i = 0; $i < $height; $i++)
 {
-    $lines[] = str_split(stream_get_line(STDIN, 31 + 1, "\n")); // width characters, each either 0 or .
+    $line = stream_get_line(STDIN, 31 + 1, "\n");
+    error_log($line);
+    $lines[] = str_split($line); // width characters, each either 0 or .
 }
 
-// Write an action using echo(). DON'T FORGET THE TRAILING \n
-// To debug (equivalent to var_dump): error_log(var_export($var, true));
-
+// Parcours de lignes
 for($i=0;$i<$height;$i++) {
+    // Parcours des cases
     for($j=0;$j<$width;$j++){
-        if ($lines[$i][$j] == "0") {
-            echo "$i $j";
-            if ($j < $width - 1 && $lines[$i][$j + 1] == "0") {
-                echo " ".$i." ".($j + 1);
+        if ($lines[$i][$j] === "0") {
+            $str = "$j $i";
+            if ($j < $width - 1 && $lines[$i][$j + 1] === "0") {
+                $str .= sprintf(" %d %d", ($j +1), $i);
             } else {
-                echo " -1 -1";
+                $str .= " -1 -1";
             }
-            if ($i < $height - 1 && $lines[$i + 1][$j] == "0") {
-                echo " ".($i + 1)." $j";
+            if ($i < $height - 1 && $lines[$i + 1][$j] === "0") {
+                $str .= sprintf(" %d %d", $j, ($i + 1));
             } else {
-                echo " -1 -1";
+                $str .= " -1 -1";
             }
-            echo PHP_EOL;
+            error_log($str);
+            echo $str.PHP_EOL;
         }
     }
 }
-// Three coordinates: a node, its right neighbor, its bottom neighbor
-echo("0 0 1 0 0 1\n");
 ?>
