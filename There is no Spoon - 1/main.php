@@ -22,20 +22,28 @@ for($i=0;$i<$height;$i++) {
     // Parcours des cases
     for($j=0;$j<$width;$j++){
         if ($lines[$i][$j] === "0") {
-            $str = "$j $i";
-            if ($j < $width - 1 && $lines[$i][$j + 1] === "0") {
-                $str .= sprintf(" %d %d", ($j +1), $i);
-            } else {
-                $str .= " -1 -1";
-            }
-            if ($i < $height - 1 && $lines[$i + 1][$j] === "0") {
-                $str .= sprintf(" %d %d", $j, ($i + 1));
-            } else {
-                $str .= " -1 -1";
-            }
-            error_log($str);
-            echo $str.PHP_EOL;
+            $node = "$j $i";
+            // Premier voisin de droite
+            $node .= voisinDroite($lines, $j + 1, $i, $width);
+            $node .= voisinBas($lines, $j, $i + 1, $height);
+            echo $node.PHP_EOL;
         }
     }
+}
+
+function voisinDroite($lines, $j, $i, $width) {
+    for (; $j < $width; $j++) {
+        if ($lines[$i][$j] === "0")
+            return " $j $i";
+    }
+    return " -1 -1";
+}
+
+function voisinBas($lines, $j, $i, $height) {
+    for (; $i < $height; $i++) {
+        if ($lines[$i][$j] === "0")
+            return " $j $i";
+    }
+    return " -1 -1";
 }
 ?>
