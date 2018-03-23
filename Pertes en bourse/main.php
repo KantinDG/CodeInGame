@@ -1,21 +1,13 @@
 <?php
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
-
 fscanf(STDIN, "%d",
     $n
 );
-$inputs = fgets(STDIN);
-$inputs = explode(" ",$inputs);
-$vals = array();
-for ($i = 0; $i < $n; $i++)
-{
-    $vals[intval($inputs[$i])] = 0;
-    foreach ($vals as $key => $value) {
-      $vals[$key] = (intval($inputs[$i]) - $key < $value) ? intval($inputs[$i]) - $key : $value;
-    }
+$inputs = array_map('intval', explode(" ", fgets(STDIN)));
+$maxPerte = 0;
+$minSubTab = $inputs[$n - 1];
+for ($i=$n -2; $i >= 0; $i--) {
+  $maxPerte = min($maxPerte, ($minSubTab - $inputs[$i]));
+  $minSubTab = min($minSubTab, $inputs[$i]);
 }
-echo(min($vals)."\n");
+echo ($maxPerte.PHP_EOL);
 ?>
