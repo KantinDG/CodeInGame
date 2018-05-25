@@ -18,6 +18,7 @@ for ($i = 0; $i < $N; $i++)
     $lenght = count($telephone);
     if (!empty($number)){
         $node += min(array_map(function($item) use ($telephone, $lenght) {
+            error_log(implode('',$telephone)." ".implode('',$item));
             for($i=0;$i<$lenght&&$i<count($item);$i++) {
                 if ($telephone[$i] !== $item[$i])
                     break;
